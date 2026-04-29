@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Khajana</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f3f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: orange;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkorange;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+    <h2>Login</h2>
+
+    <input type="email" id="email" placeholder="Enter Email">
+    <input type="password" id="password" placeholder="Enter Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="message"></p>
+</div>
+
+<!-- Firebase Script -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// 🔑 Your Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyC4fm15NF5nXcTgiPeVnwI7YmV5akXKlnw",
+  authDomain: "khajana-online-shopinp.firebaseapp.com",
+  projectId: "khajana-online-shopinp",
+  storageBucket: "khajana-online-shopinp.firebasestorage.app",
+  messagingSenderId: "1044866224588",
+  appId: "1:1044866224588:web:761151a45f9276b1930d69",
+  measurementId: "G-BNJXCCEYP4"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// 🔐 Login Function
+window.login = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        document.getElementById("message").innerText = "Login Successful ✅";
+        console.log(userCredential.user);
+
+        // redirect to home page
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1500);
+    })
+    .catch((error) => {
+        document.getElementById("message").innerText = error.message;
+    });
+};
+
+</script>
+
+</body>
+</html>
